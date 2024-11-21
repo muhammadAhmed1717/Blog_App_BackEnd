@@ -6,25 +6,24 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-//Import Routes
 app.use(cookieParser()); 
 app.use(cors());
 app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*"); // Replace '*' with your app's domain or whitelist specific domains
+    res.setHeader("Access-Control-Allow-Origin", "*"); 
     res.setHeader(
         "Access-Control-Allow-Methods",
         "GET, POST, PUT, DELETE, OPTIONS"
-    ); // Include the allowed HTTP methods
+    );
     res.setHeader(
         "Access-Control-Allow-Headers",
         "Content-Type, Authorization, authtoken"
-    ); // Include the allowed headers
+    );
     next();
 });
-// const PostRoute = require("./Routes/posts");
-// app.use("/api/posts", PostRoute);
-// const UserRoute = require("./Routes/user");
-// app.use("/api/users", UserRoute);
+const PostRoute = require("./Routes/post");
+app.use("/", PostRoute);
+const UserRoute = require("./Routes/user");
+app.use("/", UserRoute);
 // app.use(erorrHandeler);
 // app.get("/", (req, res) => {
 //     res.send("We Are On Home");
