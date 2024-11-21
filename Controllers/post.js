@@ -4,6 +4,7 @@ const User = require("../Models/User");
 exports.getAll = async (req, res, next) => {
     try {
         const post = await Post.find();
+        console.log('BackEnd Blogs: ', post);
         res.json(post);
     } catch (err) {
         res.status(res.statusCode);
@@ -14,7 +15,7 @@ exports.getAll = async (req, res, next) => {
 // GET POST BY ID
 exports.getByID = async (req, res) => {
     try {
-        const post = await Post.findById(req.params.postId);
+        const post = await Post.findById(req.params.id);
         res.json(post);
     } catch (err) {
         res.json("message", err);
@@ -28,7 +29,7 @@ exports.create = async (req, res, next) => {
         req.body.author = finduser.username;
             const post = new Post({
                 title: req.body.title,
-                conent: req.body.content,
+                content: req.body.content,
                 author: req.body.author,
             });
             const savedpost = await post.save();
@@ -43,6 +44,7 @@ exports.create = async (req, res, next) => {
 // DELETE POST BY ID
 exports.remove = async (req, res, next) => {
     try {
+        console.log("id: ", req.params.id);
         const removedpost = await Post.findByIdAndDelete(req.params.id);
         res.json(removedpost);
     } catch (err) {
@@ -55,7 +57,7 @@ exports.remove = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     try {
         const options = { upsert: true };
-        const updatedPost = { $set: { title: req.body.title } };
+        const updatedPost = { $set: { title: req.body.title, content: req.body.content } };
         const result = await Post.updateOne(
             { _id: req.params.id },
             updatedPost,

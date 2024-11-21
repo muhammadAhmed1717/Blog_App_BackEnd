@@ -6,8 +6,8 @@ const PostSchemea = mongoose.Schema({
         required: true,
     },
     content: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: true,
     },
     author: {
         type: String,
