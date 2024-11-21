@@ -25,34 +25,15 @@ exports.getByID = async (req, res) => {
 exports.create = async (req, res, next) => {
     try {
         const finduser = await User.findById(req.user.id);
-        req.body.createdBy = finduser.email;
-        const category = "post";
-        let post;
-        if (!req.body.image) {
+        req.body.author = finduser.username;
             const post = new Post({
-                description: req.body.description,
-                createdBy: req.body.createdBy,
-                category: category,
-            });
-            const savedpost = await post.save();
-            // res.status(200).json(savedpost);
-            res.json(savedpost);
-        } else {
-            const post = new Post({
-                description: req.body.description,
-                createdBy: req.body.createdBy,
-                category: category,
-                image: req.body.image,
+                title: req.body.title,
+                conent: req.body.content,
+                author: req.body.author,
             });
             const savedpost = await post.save();
             // res.status(200).json(savedpost);
             res.json("Post Created Successfully");
-        }
-        // console.log(post)
-
-        // const savedpost = await post.save();
-        // // res.status(200).json(savedpost);
-        // res.json(savedpost);
     } catch (err) {
         res.status(res.statusCode);
         return next(err);
